@@ -6,9 +6,9 @@ def main():
 
 def printBoard(b):
 	data = [
-		[b[0],b[1],b[2]],
-		[b[3],b[4],b[5]],
-		[b[6],b[7],b[8]]
+		[str(b[0]),str(b[1]),str(b[2])],
+		[str(b[3]),str(b[4]),str(b[5])],
+		[str(b[6]),str(b[7]),str(b[8])]
 	]
 	for row in data:
 		print("{:>20} {: >20} {:>20}".format(*row))
@@ -22,17 +22,62 @@ def switchPlayer():
 	else :
 		currentPlayer = " "
 
+def checkIfPlayerWon(board, player):
+	if ((player == board[0] == board[1] == board[2]) or
+		(player == board[3] == board[4] == board[5]) or
+		(player == board[6] == board[7] == board[8]) or
+
+		(player == board[0] == board[3] == board[6]) or
+		(player == board[1] == board[4] == board[7]) or
+		(player == board[2] == board[5] == board[8]) or
+
+		(player == board[0] == board[4] == board[8]) or 
+		(player == board[2] == board[4] == board[6])):
+		return True
+	return False		
+
+def isLegalMove(board, player, input):
+	if input < 0 or input >= 9:
+		return False
+	if(board[input-1] != None):
+		return False
+	return True
+
+def getMove():
+	return int(input())
+
+def printGameOver():
+	global board
+	global wonPlayer
+
+	print("Player " + wonPlayer + " has won")
+	printBoard(board)
+
 def gameBegin():
 	global board
+	global wonPlayer
+
 	for turn in range(0,9):
 		print("Current Player is " + currentPlayer)
 		print("Type 1~9 (starting from top left to bottom right)")
 		printBoard(board)
-		move = input()
+		move = getMove()
+		if not isLegalMove(board,currentPlayer, move):
+			#Current player made a mistake
+			#The other player wins automatically 
+			print("Current player made a mistake")
+			switchPlayer()
+			wonPlayer = currentPlayer
+			printGameOver()
+			return
+
 		board[int(move)-1] = currentPlayer
 
-		print("Move was "+ move)
 		#check if there is a winner
+		if checkIfPlayerWon(board,currentPlayer):
+			wonPlayer = currentPlayer
+			printGameOver()
+			return
 		#if there is no winnter then switch the player
 		switchPlayer()
 		print("...")
@@ -44,8 +89,9 @@ board = [None] * 9
 X = 'X'
 O = 'O'
 currentPlayer = X;
+wonPlayer = None
 
 if __name__ == "__main__":
 	main()
 
-print("just a print function")
+print("Program end")
