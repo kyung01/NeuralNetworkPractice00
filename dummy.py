@@ -1,4 +1,3 @@
-#PYTHON MAIN FUNCTION is a starting point of any program. When the program is run, the python interpreter runs the code sequentially. Main function is executed only when it is run as a Python program. It will not run the main function if it imported as a module.
 
 def main():
 	gameBegin()
@@ -82,12 +81,29 @@ def gameBegin():
 		switchPlayer()
 		print("...")
 
+#board related functions
+def getBoardID(board, currentPlayer):
+	boardID = 0
+	if currentPlayer == O:
+		boardID += 27
+	for i in range(0,9):
+		cellID = 0
+		if board[i] == X: 
+			cellID = 1
+		elif(board[i] == O): 
+			cellID = 2
+
+		cellID = pow(3,i)
 
 
+	board[]
 
-board = [None] * 9
+
+#Enums
 X = 'X'
 O = 'O'
+
+board = [None] * 9
 currentPlayer = X;
 wonPlayer = None
 
