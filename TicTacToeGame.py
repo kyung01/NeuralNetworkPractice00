@@ -66,6 +66,8 @@ class TicTacToeGame:
 		print("Player " + str(self.wonPlayer) + " has won")
 		self.printBoard(self.board)
 
+	def isValidMove(self, move):
+		return self.board[move] == None
 
 	def getRandomMove(self):
 		unselectedSlots = []
